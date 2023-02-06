@@ -1,0 +1,181 @@
+
+@import url("https://use.typekit.net/naa8btm.css");
+@import url('https://fonts.googleapis.com/css2?family=Delius:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+$text: #111111;
+$primary: white;
+$secondary: #191919;
+
+@keyframes fade-down {
+  from {opacity: 0; bottom: 3rem;}
+  to {opacity: 1; bottom: 0;}
+}
+@mixin fade-down($delay, $duration) {
+  animation-name: fade-down;
+  animation-duration: $duration;
+  animation-delay: $delay;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation-fill-mode: forwards;
+
+  position: relative;
+  opacity: 0;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+  background: $primary;
+  color: $text;
+  font-family: 'Delius', sans-serif;
+  scroll-behavior: smooth;
+}
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Delius', sans-serif;
+}
+
+nav {
+  position: absolute;
+  width: 100vw;
+  padding: 3rem 6vw;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  @media (min-width: 600px) {
+    align-items: center;
+  }
+  
+  div {
+    display: flex;
+    gap: 1rem;
+
+    span {
+      transition: 0.2s ease-in-out;
+      text-decoration: underline solid rgb(0 0 0 / 0.2);
+
+      &:nth-of-type(1) {@include fade-down(3.25s, 1s)}
+      &:nth-of-type(2) {@include fade-down(3.5s, 1s)}
+      &:nth-of-type(3) {@include fade-down(3.75s, 1s)}
+      
+      &:hover {
+        color: rgb(0 0 0 / 0.5);
+        text-decoration: underline solid rgb(0 0 0 / 0.5);
+        cursor: pointer;
+      }
+    }
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      text-align: right;
+      
+      span {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+.logo {
+  color: inherit;
+  text-decoration: none;
+  width: fit-content;
+  
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    width: fit-content;
+
+    @media (max-width: 500px) {
+      font-size: 1.2rem;
+    }
+
+    .oring {
+      clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+      animation-name: show;
+      animation-delay: 2.5s;
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+    }
+    .close {
+      position: relative;
+      right: 2.45em;
+      animation-name: moveRight;
+      animation-delay: 2.5s;
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+    }
+
+    &:hover {
+      font-weight: 300;
+      letter-spacing: 0.1em;
+    }
+  }
+}
+@keyframes show {
+  from {clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);}
+  to {clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);}
+}
+@keyframes moveRight {
+  from {right: 2.45em;}
+  to {right: 0;}
+}
+
+footer {
+  padding: 1.5rem 7vw 1rem 7vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 1rem 1rem 0 0;
+  box-sizing: border-box;
+
+  .signature {
+    img {
+      max-height: 3rem;
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+.link {
+  text-decoration: underline rgb(0 0 0 / 0.4);
+  font-weight: 500;
+  transition: 0.2s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline $text;
+  }
+}
+.disabled {
+  opacity: 0.5 !important;
+  &:hover {
+    cursor: not-allowed !important;
+  }
+}
+
+::selection {
+  background: rgb(0 0 0 / 0.9);
+  color: $primary;
+  opacity: 0.2;
+}
+
+::-webkit-scrollbar {
+  width: 7px; 
+}
+::-webkit-scrollbar-track {
+  background-color: rgb(0 0 0 / 0.25);
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(0 0 0 / 0.6);
+  background-opacity: 0.2;
+  border-radius: 25px;
+  
+  &:hover {
+    background: rgb(0 0 0 / 0.5);
+  }
+}

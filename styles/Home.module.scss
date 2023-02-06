@@ -1,0 +1,459 @@
+
+$text: #111111;
+$primary: white;
+$secondary: #191919;
+
+
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+@mixin center {
+  display: grid;
+  place-items: center;
+}
+
+@keyframes fade-down {
+  from {opacity: 0; bottom: 3rem;}
+  to {opacity: 1; bottom: 0;}
+}
+@mixin fade-down($delay, $duration) {
+  animation-name: fade-down;
+  animation-duration: $duration;
+  animation-delay: $delay;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation-fill-mode: forwards;
+
+  position: relative;
+  opacity: 0;
+}
+@keyframes hide {
+  from {opacity: 1}
+  to {opacity: 0}
+}
+
+
+
+#header {
+  height: 100vh;
+  @include flex-center;
+  text-align: center;
+  
+  h1 {
+    font-size: 8rem;
+    font-weight: 900;
+    @include flex-center;
+    flex-direction: row;
+    margin: 0;
+    z-index: 2;
+    line-height: 1.075em;
+
+    @media (max-width: 1000px) {
+      font-size: 6rem;
+    }
+    @media (max-width: 700px) {
+      font-size: 4rem;
+    }
+    @media (max-width: 500px) {
+      font-size: 12vw;
+    }
+
+    #bgTxt {
+      position: absolute;
+      color: transparent;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color: $text;
+      animation-name: hide;
+      animation-delay: 1.5s;
+      animation-duration: 0.5s;
+      animation-fill-mode: forwards;
+    }
+    
+    #heroTxt {
+      z-index: 2;
+      
+      div {
+        display: flex; @include flex-center; flex-direction: row; gap: 0.15em;
+
+        &:nth-of-type(1) {
+          span {
+            &:nth-of-type(1) {@include fade-down(.5s, 1s);}
+            &:nth-of-type(2) {@include fade-down(.75s, 1s);}
+          }
+        }
+        &:nth-of-type(2) {
+          span {
+            &:nth-of-type(1) {@include fade-down(1s, 1s);}
+            &:nth-of-type(2) {@include fade-down(1.25s, 1s);}
+          }
+        }
+      }
+      span {
+        display: block;
+        background-image: url("https://i.pinimg.com/originals/17/96/ef/1796ef0033df2a1bb61b02d731541119.gif");
+        background-size: cover;
+        color: transparent;
+        background-clip: text;
+
+        &:hover {
+          background: transparent;
+          -webkit-text-stroke-width: 1px;
+          -webkit-text-stroke-color: $text;
+        }
+      }
+    }
+  }
+  h2 {
+    margin: 0.5rem;
+    font-size: 2rem;
+    font-weight: 300;
+    font-style: italic;
+    @include fade-down(1.5s, 1s);
+    z-index: 2;
+    @media (max-width: 700px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  #scrollPrompt {
+    @include fade-down(1.75s, 1s);
+    position: absolute;
+    margin-bottom: 5vh;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    h2 {
+      font-weight: 400;
+      font-style: italic;
+      font-size: 1.9rem;
+      margin: 0;
+      
+      @media (max-width: 1000px) {
+        font-size: 1.2rem;
+      }
+    }
+    .scrollAnim {
+      border: 1px solid $text;
+      width: 1rem;
+      height: 2rem;
+      border-radius: 5rem;
+      position: relative;
+
+      @media (max-width: 1000px) {
+        width: 0.6rem;
+        height: 1.2rem;
+      }
+
+      &:before {
+        content: "";
+        width: calc(100% - 2px);
+        height: calc(50% - 2px);
+        background: black;
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        border-radius: 100%;
+        animation-name: scroll;
+        animation-duration: 4s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+      }
+    }
+  }
+
+  #upText {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    position: absolute;
+    bottom: -4rem;
+    opacity: 0.1;
+
+    span {
+      display: block;
+      font-weight: 800;
+      
+      @for $i from 1 through 50 {
+        &:nth-of-type(#{$i}) { 
+          font-size: (random(300)/100)+ 0.5 + vw;
+        }
+      }
+    }
+  }
+}
+@keyframes scroll {
+  0% {top: 50%}
+  20% {top: 50%}
+  40% {top: 1px}
+  80% {top: 1px}
+  100% {top: 50%}
+}
+
+#main {
+  section {
+    padding: 3rem 6vw;
+    
+    &:nth-of-type(odd) {
+      color: $primary;
+      background: $secondary;
+    }
+  }
+
+  #gridSection {
+    min-height: 80vh;
+    position: relative;
+    box-sizing: border-box;
+    
+    #grid {
+      display: grid;
+      height: 100%;
+      @media (min-width: 1000px) {
+        grid-template-columns: repeat(28, 1fr);
+        grid-template-rows: repeat(2, 40vh);
+      }
+      @media (max-width: 1000px) {
+        grid-template-rows: repeat(4, 30vw);
+      }
+      @media (max-width: 500px) {
+        grid-template-rows: repeat(4, 10rem);
+      }
+      gap: 2rem;
+      place-items: center;
+  
+      article {
+        @media (min-width: 1000px) {
+          &:nth-of-type(1) {grid-column: span 17}
+          &:nth-of-type(2) {grid-column: span 11}
+          &:nth-of-type(3) {grid-column: span 10}
+          &:nth-of-type(4) {grid-column: span 18}
+        }
+        transform: scale(0.9);
+        opacity: 0;
+  
+        @include flex-center;
+        position: relative;
+        background: white;
+        color: $text;
+        border-radius: 1rem;
+        padding: 2rem;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+  
+        .outer {
+          width: calc(100% - 4rem);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: absolute;
+          bottom: 0;
+          h2 {
+            transition: 0.2s ease-out;
+
+            em {
+              font-weight: 400;
+              font-size: 1.2rem;
+            }
+          }
+          img {
+            max-height: 2rem;
+            transition: 0.2s ease-out;
+          }
+        }
+        .inner {
+          @include flex-center;
+
+          img {
+            width: 10vw;
+            opacity: 0.2;
+            position: absolute;
+            transition: 0.3s ease-in-out;
+          }
+          div {
+            @include flex-center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            
+            h3 {
+              font-weight: 900;
+              font-size: 5.9vw;
+              white-space: nowrap;
+              animation-name: move-left;
+              animation-duration: 5s;
+              animation-iteration-count: infinite;
+              animation-timing-function: linear;
+              position: absolute;
+              left: 0;
+              opacity: 0;
+              transform: scale(0.9);
+              transition: 0.6s ease-in-out;
+
+              &:nth-of-type(2) {
+                animation-delay: 2.5s;
+              }
+              @keyframes move-left {
+                from {left: 100%}
+                to {left: -100%}
+              }
+            }
+          }
+        }
+        transition: 0.4s ease-in-out;
+        &:hover {
+          &:not(.disabled) {
+            width: 97.5%;
+            height: 97.5%;
+          }
+          background: rgb(255 255 255 / 0.9);
+          cursor: pointer;
+
+          &:not(.disabled) {
+            .outer {
+              h2 {
+                opacity: 0.2;
+              }
+              img {
+                opacity: 0.5;
+              }
+            }
+            .inner img {opacity: 0.6;}
+          }
+          .inner {
+            div h3 {
+              opacity: 1;
+              transform: scale(1);
+            }
+          }
+        }
+      }
+    }
+  }
+  #moreInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    
+    article {
+      @media (min-width: 1000px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      position: relative;
+      
+      h2 {
+        color: white;
+        text-align: center;
+        @include flex-center;
+        background: $secondary;
+        width: 100%;
+        margin: 0;
+        border: 1px solid $secondary;
+        border-radius: 1rem;
+        box-sizing: border-box;
+        font-size: 2.5rem;
+        font-weight: 300;
+        font-style: italic;
+        line-height: 1em;
+        z-index: 2;
+        padding: 2rem 0;
+
+        strong {
+          font-weight: 800;
+          font-style: normal;
+        }
+
+        @media (min-width: 1000px) {
+          position: relative;
+          left: 50%;
+        
+          &:before {
+            content: "";
+            height: 1px;
+            width: 1.6rem;
+            position: absolute;
+            top: -1px;
+            left: -1.1rem;
+            background: $primary;
+          }
+          &:after {
+            content: "";
+            height: 1px;
+            width: 1.6rem;
+            position: absolute;
+            bottom: -1px;
+            left: -1.1rem;
+            background: $primary;
+          }
+        }
+      }
+      p {
+        border: 1px solid $secondary;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 2rem 3rem;
+        position: relative;
+        font-size: 1.1rem;
+        line-height: 1.5em;
+
+        @media (min-width: 1000px) {
+          border-radius: 0 1rem 1rem 0;
+          border-left: none;
+          position: relative;
+          right: 50%;
+
+          &:before {
+            content: "";
+            height: 1px;
+            width: 1rem;
+            position: absolute;
+            top: -1px;
+            left: -1rem;
+            background: $secondary;
+          }
+          &:after {
+            content: "";
+            height: 1px;
+            width: 1rem;
+            position: absolute;
+            bottom: -1px;
+            left: -1rem;
+            background: $secondary;
+          }
+        }
+        @media (max-width: 1000px) {
+          border-radius: 0 0 1rem 1rem;
+          border-top: none;
+
+          &:before {
+            content: "";
+            height: 1rem;
+            width: 1px;
+            position: absolute;
+            top: -1rem;
+            right: -1px;
+            background: $secondary;
+          }
+          &:after {
+            content: "";
+            height: 1rem;
+            width: 1px;
+            position: absolute;
+            top: -1rem;
+            left: -1px;
+            background: $secondary;
+          }
+        }
+      }
+    }
+  }
+}

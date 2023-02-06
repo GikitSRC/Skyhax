@@ -1,0 +1,54 @@
+@keyframes fade-down {
+  from {opacity: 0; bottom: 3rem;}
+  to {opacity: 1; bottom: 0;}
+}
+@mixin fade-down($delay, $duration) {
+  animation-name: fade-down;
+  animation-duration: $duration;
+  animation-delay: $delay;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation-fill-mode: forwards;
+
+  position: relative;
+  opacity: 0;
+}
+
+#main {
+  height: calc(100vh - 92px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+
+  img {
+    max-width: 80vw;
+    border-radius: 1rem;
+    filter: grayscale(100%);
+    @include fade-down(1s, 1s);
+  }
+  h1 {
+    font-size: 3rem;
+    margin: 0.5rem;
+    @include fade-down(1.25s, 1s);
+
+    @media (max-width: 600px) {
+      font-size: 8vw;
+    }
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+    font-style: italic;
+    padding: 0.3rem 2rem;
+    border-radius: 1rem;
+    border: 1px solid #111111;
+    transition: 0.2s ease-in-out;
+    @include fade-down(1.75s, 1s);
+
+    &:hover {
+      background: #111111;
+      color: white;
+    }
+  }
+}
